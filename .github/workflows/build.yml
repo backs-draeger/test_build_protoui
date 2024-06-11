@@ -14,15 +14,6 @@ jobs:
     - name: Checkout code
       run:  git clone https://gitlab.com/sdc-suite/protosdc/protosdc-ui.git
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
-
-    - name: Install dependencies
-      run: npm install
-      working-directory: protosdc-ui
-
     - name: Setup Rust
       uses: actions-rs/toolchain@v1
       with:
@@ -32,8 +23,7 @@ jobs:
 
     - name: Install Protobuf Compiler, Git, WebView2 Runtime, and Strawberry Perl
       run: |
-        choco install protoc git webview2-runtime strawberryperl -y
-        choco upgrade nodejs -y
+        choco install nodejs protoc git webview2-runtime strawberryperl -y
 
     - name: Build
       working-directory: protosdc-ui
