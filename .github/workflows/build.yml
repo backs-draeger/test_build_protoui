@@ -12,9 +12,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        repository: https://gitlab.com/sdc-suite/protosdc/protosdc-ui.git
+      run:   run: git clone https://gitlab.com/sdc-suite/protosdc/protosdc-ui.git
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
