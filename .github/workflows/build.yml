@@ -48,5 +48,5 @@ jobs:
       with:
         name: dist
         path: |
-          dist
-          rust/target/release/bundle/
+          protosdc-ui/dist
+          protosdc-ui/rust/target/release/bundle/
