@@ -34,13 +34,11 @@ jobs:
       run: |
         choco install protoc git webview2-runtime strawberryperl -y
         choco upgrade nodejs -y
-        refreshenv
 
     - name: Build
       working-directory: protosdc-ui
       run: |
         npm install -g pnpm
-        refreshenv
         pnpm i
         bash ./gen_buf_windows.sh
         pnpm run tauri build 
