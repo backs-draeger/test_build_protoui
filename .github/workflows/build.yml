@@ -1,0 +1,54 @@
+# .github/workflows/build.yml
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        repository: https://gitlab.com/sdc-suite/protosdc/protosdc-ui.git
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Setup Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt
+        override: true
+
+    - name: Install Protobuf Compiler, Git, WebView2 Runtime, and Strawberry Perl
+      run: |
+        choco install protoc git webview2-runtime strawberryperl -y
+        choco upgrade nodejs -y
+        refreshenv
+
+    - name: Build
+      run: |
+        npm install -g pnpm
+        refreshenv
+        pnpm i
+        bash ./gen_buf_windows.sh
+        pnpm run tauri build 
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: |
+          dist
+          rust/target/release/bundle/
