@@ -46,7 +46,6 @@ jobs:
         pnpm run tauri build 
 
     - name: Archive production artifacts
-      working-directory: protosdc-ui
       uses: actions/upload-artifact@v2
       with:
         name: dist
